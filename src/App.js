@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import "./App.css";
 
-const emailRegex = RegExp(
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-);
-
+const emailRegex = RegExp( /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
 const phone = RegExp ( /^\d{7,14}$/ );
+const password = RegExp (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/);
 
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
 
   // validate form errors being empty
   Object.values(formErrors).forEach(val => {
-    console.log(val)
+    // console.log(val)
     val.length > 0 && (valid = false);
   });
 
@@ -20,19 +18,11 @@ const formValid = ({ formErrors, ...rest }) => {
   Object.values(rest).forEach(val => {
     val === null && (valid = false);
   });
+  formErrors.main = "Please fill the form";
+  console.log(formErrors.main);
 
   return valid;
 };
-
-
-
-// const equal = () => {
-//   console.log(this.state.password)
-//   console.log(this.state.password2)
-//   if( this.state.password === this.state.password2)
-//     return true
-//   else return false
-// }
 
 class App extends Component {
   constructor(props) {
@@ -56,27 +46,31 @@ class App extends Component {
       }
     };
   }
-  // const validarPassword2 = () => {
-   equal(){
+
+  equal(){
     console.log(this.state.password+ "| es 1")
     console.log(this.state.password2 + "| es 2")
     if( this.state.password === this.state.password2)
       return true
     else return false
   }
-   email () {
-    let formErrors = { ...this.state.formErrors };
-    console.log(this.state.password+ "| es 1")
-    console.log(this.state.password2 + "| es 2")
 
-    if(  this.state.password < 6) {
-      console.log("yes")
-      formErrors.password = "Minimum 6 characaters required";
+   email (email) {
+    let message = "";
+    if(  !password.test(email) ){
+      message = "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number ";
     }
-    else 
-      if( this.state.password === this.state.password2){
-        formErrors.password = "Password not equal";
-      }
+    return message;
+
+
+    // if(  email.length < 6) {
+    //   console.log("yes")
+    //   wow = "Minimum 6 characaters required";
+    // }
+    // else if(  !password.test(email) ){
+    //     wow = "Minimum eight characters, at least one uppercase letter, one lowercase letter and one number ";
+    //   }
+    // return wow;
   }
 
   handleSubmit = e => {
@@ -88,13 +82,12 @@ class App extends Component {
         First Name: ${this.state.firstName}
         Last Name: ${this.state.lastName}
         Email: ${this.state.email}
-        Phone: ${this.state.phone}
+        Phone: ${this.state.phone_number}
         Password: ${this.state.password}
         Password2: ${this.state.password2}
 
       `);
-    } else {
-      // formErrors.main = "Please fill the form"
+    } else {     
       console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
     }
   };
@@ -110,8 +103,6 @@ class App extends Component {
       case "firstName":
         formErrors.firstName =
           value.length < 3 || value.trim() === "" ? "Minimum 3 characaters required" : "";
-          // console.log(value.trim());
-          // console.log(value.length);
         break;
       case "lastName":
         formErrors.lastName =
@@ -128,17 +119,18 @@ class App extends Component {
          : "Phone number must be between 7 and 14 digits" ;
         break;
       case "password":
-        // formErrors.password2 = !this.equal() ? "Not equal" : "eq";
-
-        // this.email();
-        formErrors.password =
-          value.length < 6 ? "Minimum 6 characaters required" : "";
+        
+        let errorMessage = this.email(value);
+        console.log(errorMessage+" return de funcion");
+        formErrors.password = errorMessage;
         break;
       case "password2":
+        let errorMessages = this.email(value);
+        console.log(errorMessages+" return de funcion");
+        formErrors.password2 = errorMessages;
+
         formErrors.password2 = !this.equal() ? "Passwords must be the same" : "";
-        value.length < 6 ? "Minimum 6 characaters required" : "";
-        // formErrors.password2 =
-        //   value.length < 6 ? "Minimum 6 characaters required" : "";
+
         break;
       default:
         break;
@@ -154,7 +146,6 @@ class App extends Component {
       <div className="wrapper">
         <div className="form-wrapper">
           <h1>Create Account</h1>
-          <span className="errorMessage"> {formErrors.main}</span>
           <form onSubmit={this.handleSubmit} noValidate>
             <div className="firstName">
               <label htmlFor="firstName">First Name</label>
