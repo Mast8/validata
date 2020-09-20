@@ -48,8 +48,8 @@ class App extends Component {
   }
 
   equal(){
-    console.log(this.state.password+ "| es 1")
-    console.log(this.state.password2 + "| es 2")
+    // console.log(this.state.password+ "| is 1")
+    // console.log(this.state.password2 + "| is 2")
     if( this.state.password === this.state.password2)
       return true
     else return false
@@ -195,7 +195,7 @@ class App extends Component {
             </div>
 
             <div className="phone_number">
-              <label htmlFor="phone">Last Name</label>
+              <label htmlFor="phone">Phone number</label>
               <input
                 className={formErrors.phone_number.length > 0 ? "error" : null}
                 placeholder="Phone number"
