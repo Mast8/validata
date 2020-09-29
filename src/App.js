@@ -173,6 +173,7 @@ class App extends Component {
                 noValidate
                 onChange={this.handleChange}
                 onKeyUp={this.handleChange}
+                onBlur={this.handleChange}
               />
               {formErrors.lastName.length > 0 && (
                 <span className="errorMessage">{formErrors.lastName}</span>
@@ -188,6 +189,7 @@ class App extends Component {
                 noValidate
                 onChange={this.handleChange}
                 onKeyUp={this.handleChange}
+                onBlur={this.handleChange}
               />
               {formErrors.email.length > 0 && (
                 <span className="errorMessage">{formErrors.email}</span>
@@ -204,6 +206,7 @@ class App extends Component {
                 noValidate
                 onChange={this.handleChange}
                 onKeyUp={this.handleChange}
+                onBlur={this.handleChange}
               />
               {formErrors.phone_number.length > 0 && (
                 <span className="errorMessage">{formErrors.phone_number}</span>
@@ -220,6 +223,7 @@ class App extends Component {
                 noValidate
                 onChange={this.handleChange}
                 onKeyUp={this.handleChange}
+                onBlur={this.handleChange}
               />
               {formErrors.password.length > 0 && (
                 <span className="errorMessage">{formErrors.password}</span>
@@ -235,6 +239,7 @@ class App extends Component {
                 noValidate
                 onChange={this.handleChange}
                 onKeyUp={this.handleChange}
+                onBlur={this.handleChange}
               />
               {formErrors.password2.length > 0 && (
                 <span className="errorMessage">{formErrors.password2}</span>
